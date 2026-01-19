@@ -1,9 +1,9 @@
 <div class="min-h-screen bg-gray-50">
     {{-- Header dengan Breadcrumb --}}
-    <section class="bg-white py-8 border-b">
-        <div class="max-w-7xl mx-auto px-6">
+    <section class="bg-white py-8">
+        <div class="max-w-7xl mx-auto px-6 text-center">
             {{-- Breadcrumb --}}
-            <div class="flex items-center gap-2 text-sm text-gray-600 mb-4">
+            <div class="flex items-center justify-center gap-2 text-sm text-gray-600 mb-4">
                 <svg class="w-5 h-5" style="color: {{ $globalSettings->primary_color_style }}" fill="currentColor" viewBox="0 0 20 20">
                     <path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z"/>
                 </svg>
@@ -15,12 +15,12 @@
             <h1 class="text-3xl lg:text-5xl font-bold text-gray-900 mb-3">
                 Jejak <span style="color: {{ $globalSettings->primary_color_style }}">Alumni RPL</span>
             </h1>
-            <p class="text-gray-600 text-lg">Alumni Jurusan Rekayasa Perangkat Lunak yang telah berkarir di berbagai bidang</p>
+            <p class="text-gray-600 text-lg max-w-4xl mx-auto">Alumni Jurusan Rekayasa Perangkat Lunak yang telah berkarir di berbagai bidang</p>
         </div>
     </section>
 
     {{-- Search Only --}}
-    <section class="py-6 bg-white border-b">
+    <section class="py-6 bg-white">
         <div class="max-w-7xl mx-auto px-6">
             <div class="max-w-2xl">
                 <div class="relative">
@@ -54,7 +54,7 @@
                         
                         <div class="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
                             @foreach($alumnis as $alumni)
-                                <a href="/alumni/{{ $alumni->id }}" class="bg-white rounded-lg overflow-hidden shadow-sm hover:shadow-lg transition group block">
+                                <a href="/alumni/{{ $alumni->id }}" class="bg-white rounded-xl overflow-hidden hover:shadow-lg transition-shadow group block">
                                     @if($alumni->foto_url)
                                         <img src="{{ $alumni->foto_url }}" alt="{{ $alumni->nama }}" class="w-full aspect-video object-cover group-hover:scale-105 transition duration-300">
                                     @else

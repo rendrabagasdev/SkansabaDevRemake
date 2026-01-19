@@ -2,7 +2,7 @@
     <div class="max-w-7xl mx-auto px-6">
         <div class="flex items-center justify-between h-16">
             {{-- Logo & Brand --}}
-            <div class="flex items-center gap-3">
+            <div class="flex items-center gap-3 lg:flex">
                 @if($globalSettings->logo_primary_url)
                     <img src="{{ $globalSettings->logo_primary_url }}" alt="{{ $globalSettings->site_name }}" class="h-10 w-auto">
                 @else
@@ -12,7 +12,7 @@
                         </svg>
                     </div>
                 @endif
-                <div>
+                <div class="hidden lg:block">
                     <div class="font-bold text-lg leading-tight" style="color: {{ $globalSettings->primary_color_style }}">{{ $globalSettings->site_name ?? 'Rekayasa Perangkat Lunak' }}</div>
                     <div class="text-xs text-gray-600">{{ $globalSettings->site_tagline ?? 'SMK Negeri 1 Bantul' }}</div>
                 </div>
@@ -100,15 +100,43 @@
         x-data="{ open: false }"
         @toggle-mobile-menu.window="open = !open"
         x-show="open"
-        x-transition
-        class="lg:hidden border-t border-gray-200"
+        x-transition:enter="transition ease-out duration-200"
+        x-transition:enter-start="opacity-0 -translate-y-4"
+        x-transition:enter-end="opacity-100 translate-y-0"
+        x-transition:leave="transition ease-in duration-150"
+        x-transition:leave-start="opacity-100"
+        x-transition:leave-end="opacity-0 -translate-y-4"
+        class="lg:hidden fixed top-0 left-0 w-full bg-white border-b border-gray-200 shadow-lg z-50"
+        style="min-height: 100vh;"
     >
-        <div class="px-6 py-4 space-y-1">
+        <div class="flex items-center justify-between px-6 pt-6 pb-2">
+            <div class="flex items-center gap-3">
+                @if($globalSettings->logo_primary_url)
+                    <img src="{{ $globalSettings->logo_primary_url }}" alt="{{ $globalSettings->site_name }}" class="h-10 w-auto">
+                @else
+                    <div class="w-10 h-10 rounded-lg flex items-center justify-center" style="background: linear-gradient(to bottom right, {{ $globalSettings->primary_color_style }}, {{ $globalSettings->primary_color_style }})">
+                        <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/>
+                        </svg>
+                    </div>
+                @endif
+                <div>
+                    <div class="font-bold text-lg leading-tight" style="color: {{ $globalSettings->primary_color_style }}">{{ $globalSettings->site_name ?? 'Rekayasa Perangkat Lunak' }}</div>
+                    <div class="text-xs text-gray-600">{{ $globalSettings->site_tagline ?? 'SMK Negeri 1 Bantul' }}</div>
+                </div>
+            </div>
+            <button @click="open = false" class="p-2 rounded-full bg-gray-100 hover:bg-gray-200 text-gray-600 focus:outline-none" aria-label="Tutup menu">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                </svg>
+            </button>
+        </div>
+        <div class="px-6 py-2 space-y-2">
             <a href="/" class="block py-2 text-gray-900 font-medium hover-primary">Beranda</a>
             
             {{-- Profil Mobile Accordion --}}
-            <div x-data="{ expanded: false }">
-                <button @click="expanded = !expanded" class="w-full flex items-center justify-between py-2 text-gray-600 hover-primary">
+            <div x-data="{ expanded: false }" class="border-b border-gray-100 pb-2 mb-2">
+                <button @click="expanded = !expanded" class="w-full flex items-center justify-between py-2 text-gray-600 hover-primary font-semibold">
                     <span>Profil</span>
                     <svg class="w-4 h-4 transition-transform" :class="{ 'rotate-180': expanded }" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
@@ -121,8 +149,8 @@
             </div>
 
             {{-- Siswa Mobile Accordion --}}
-            <div x-data="{ expanded: false }">
-                <button @click="expanded = !expanded" class="w-full flex items-center justify-between py-2 text-gray-600 hover-primary">
+            <div x-data="{ expanded: false }" class="border-b border-gray-100 pb-2 mb-2">
+                <button @click="expanded = !expanded" class="w-full flex items-center justify-between py-2 text-gray-600 hover-primary font-semibold">
                     <span>Siswa</span>
                     <svg class="w-4 h-4 transition-transform" :class="{ 'rotate-180': expanded }" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
@@ -138,8 +166,8 @@
             <a href="/unit-produksi" class="block py-2 text-gray-600 hover-primary">Unit Produksi</a>
 
             {{-- Informasi Mobile Accordion --}}
-            <div x-data="{ expanded: false }">
-                <button @click="expanded = !expanded" class="w-full flex items-center justify-between py-2 text-gray-600 hover-primary">
+            <div x-data="{ expanded: false }" class="border-b border-gray-100 pb-2 mb-2">
+                <button @click="expanded = !expanded" class="w-full flex items-center justify-between py-2 text-gray-600 hover-primary font-semibold">
                     <span>Informasi</span>
                     <svg class="w-4 h-4 transition-transform" :class="{ 'rotate-180': expanded }" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>

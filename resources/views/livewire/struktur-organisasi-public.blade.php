@@ -1,9 +1,9 @@
 <div class="min-h-screen bg-gray-50">
     {{-- Header dengan Breadcrumb --}}
-    <section class="bg-white py-8 border-b">
-        <div class="max-w-7xl mx-auto px-6">
+    <section class="bg-white py-8">
+        <div class="max-w-7xl mx-auto px-6 text-center">
             {{-- Breadcrumb --}}
-            <div class="flex items-center gap-2 text-sm text-gray-600 mb-4">
+            <div class="flex items-center justify-center gap-2 text-sm text-gray-600 mb-4">
                 <svg class="w-5 h-5" style="color: {{ $globalSettings->primary_color_style }}" fill="currentColor" viewBox="0 0 20 20">
                     <path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z"/>
                 </svg>
@@ -15,7 +15,7 @@
             <h1 class="text-3xl lg:text-5xl font-bold text-gray-900 mb-3">
                 Struktur Organisasi <span style="color: {{ $globalSettings->primary_color_style }}">Konsentrasi Keahlian RPL</span>
             </h1>
-            <p class="text-gray-600 text-lg">Struktur organisasi yang solid dengan tenaga pendidik dan kependidikan yang berkompeten untuk menghasilkan lulusan terbaik di bidang Rekayasa Perangkat Lunak</p>
+            <p class="text-gray-600 text-lg max-w-4xl mx-auto">Struktur organisasi yang solid dengan tenaga pendidik dan kependidikan yang berkompeten untuk menghasilkan lulusan terbaik di bidang Rekayasa Perangkat Lunak</p>
         </div>
     </section>
 
@@ -23,9 +23,9 @@
     <section class="py-12">
         <div class="max-w-7xl mx-auto px-6">
             @if($members->count() > 0)
-                <div class="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                <div class="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 justify-items-center">
                     @foreach($members as $member)
-                        <a href="/struktur-organisasi/{{ $member->id }}" class="bg-white rounded-lg overflow-hidden shadow-sm hover:shadow-lg transition group block">
+                        <a href="/struktur-organisasi/{{ $member->id }}" class="bg-white rounded-xl overflow-hidden hover:shadow-lg transition-shadow group block w-full">
                             @if($member->foto_url)
                                 <img src="{{ $member->foto_url }}" alt="{{ $member->nama }}" class="w-full aspect-video object-cover group-hover:scale-105 transition duration-300">
                             @else

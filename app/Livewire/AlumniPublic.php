@@ -4,9 +4,13 @@ namespace App\Livewire;
 
 use App\Models\Alumni;
 use Livewire\Component;
+use Livewire\WithPagination;
+
 
 class AlumniPublic extends Component
 {
+    use WithPagination;
+
     public $search = '';
     public $filterStatus = '';
 

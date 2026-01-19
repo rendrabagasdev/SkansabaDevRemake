@@ -4,9 +4,13 @@ namespace App\Livewire;
 
 use App\Models\KaryaSiswa;
 use Livewire\Component;
+use Livewire\WithPagination;
+
 
 class KaryaSiswaPublic extends Component
 {
+    use WithPagination;
+
     public $search = '';
     public $filterKategori = '';
 
