@@ -20,6 +20,7 @@ class MitraManager extends Component
     public $mitraId = null;
     public $nama_mitra = '';
     public $logo = null;
+    public $crop_data = null; // For image cropper component
     public $currentLogo = null;
     public $website = '';
     public $status = 'draft';

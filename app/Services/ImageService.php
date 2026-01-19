@@ -56,6 +56,44 @@ class ImageService
     }
 
     /**
+     * Process base64 image (from cropper) with transparency support
+     *
+     * @param string $base64Data Base64 encoded image data
+     * @param string $path Storage path (e.g., 'images/content')
+     * @param array $options
+     * @return string|null Stored file path or null on failure
+     */
+    public function processBase64AndStore(string $base64Data, string $path = 'images', array $options = []): ?string
+    {
+        try {
+            // Remove data:image/png;base64, prefix if present
+            if (str_contains($base64Data, 'base64,')) {
+                $base64Data = explode('base64,', $base64Data)[1];
+            }
+
+            $imageData = base64_decode($base64Data);
+            if (!$imageData) {
+                return null;
+            }
+
+            // Load image from decoded data
+            $image = $this->manager->read($imageData);
+
+            // Apply any additional edits (usually not needed for pre-cropped images)
+            if (!empty($options)) {
+                $image = $this->applyEdits($image, $options);
+            }
+
+            // Convert to WebP with transparency support
+            return $this->convertAndStore($image, $path, $options['filename'] ?? null);
+
+        } catch (\Exception $e) {
+            \Log::error('Base64 image processing failed: ' . $e->getMessage());
+            return null;
+        }
+    }
+
+    /**
      * Process uploaded image asynchronously using queue
      *
      * @param UploadedFile $file
@@ -232,6 +270,8 @@ class ImageService
         $fullPath = $path . '/' . $filename;
 
         // Encode to WebP with compression quality
+        // Note: Intervention Image with GD driver preserves transparency automatically
+        // If transparency is lost, it means the source image doesn't have alpha channel
         $encoded = $image->toWebp($this->compressionQuality);
 
         // Store the optimized WebP image

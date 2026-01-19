@@ -37,14 +37,17 @@
         
         const viewportWidth = {{ $previewSize }};
         const viewportHeight = Math.round(viewportWidth / {{ $aspectRatio }});
-        const boundaryWidth = viewportWidth * 2;
-        const boundaryHeight = viewportHeight * 2;
+        const boundaryWidth = Math.max(viewportWidth + 100, 400);
+        const boundaryHeight = Math.max(viewportHeight + 100, 400);
         
         this.croppie = new Croppie(el, {
-            viewport: { width: viewportWidth, height: viewportHeight },
+            viewport: { width: viewportWidth, height: viewportHeight, type: 'square' },
             boundary: { width: boundaryWidth, height: boundaryHeight },
             showZoomer: true,
-            enableOrientation: true
+            enableOrientation: true,
+            enableResize: false,
+            mouseWheelZoom: 'ctrl',
+            enforceBoundary: true
         });
         
         // Real-time update saat user drag/zoom
@@ -75,11 +78,16 @@
             this.$nextTick(() => {
                 this.initCroppie();
                 setTimeout(() => {
-                    this.croppie.bind({ url: e.target.result }).then(() => {
-                        console.log('Image bound');
+                    // Bind dengan zoom 0 untuk minimum zoom (full image)
+                    this.croppie.bind({
+                        url: e.target.result,
+                        zoom: 0,  // Minimum zoom untuk show full image
+                        orientation: 1
+                    }).then(() => {
+                        console.log('Image bound with minimum zoom');
                         this.updateCrop();
                     });
-                }, 50);
+                }, 100);
             });
         };
         reader.readAsDataURL(file);
@@ -91,8 +99,8 @@
         this.croppie.result({
             type: 'base64',
             size: { width: {{ $maxWidth }}, height: {{ $maxHeight }} },
-            format: 'jpeg',
-            quality: 0.9
+            format: 'png',  // Use PNG to preserve transparency
+            quality: 1
         }).then((result) => {
             this.cropResult = result;
             // Store ONLY in Alpine, do NOT send to Livewire yet!

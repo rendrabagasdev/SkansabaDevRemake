@@ -61,8 +61,9 @@ class DatabaseSeeder extends Seeder
             GaleriSeeder::class,
             AlumniSeeder::class,
             MitraSeeder::class,
-        ]);
-
+            ]);
+        
+            
         // Re-enable foreign key checks
         \DB::statement('SET FOREIGN_KEY_CHECKS=1;');
 
